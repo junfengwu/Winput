@@ -4,7 +4,7 @@
 use Illuminate\Config\Repository as Config;
 
 
-class TrimService implements Interfaces\ServicesInterface{
+class TrimService extends Abstracts\ServicesAbstract implements Interfaces\ServicesInterface{
     
     protected $config;
 
@@ -14,8 +14,15 @@ class TrimService implements Interfaces\ServicesInterface{
         $this->config = $config;
     }
     
-    public function clean( $value )
+    public function clean( $value, array $param = array() )
     {
-        return $this->config->get('winput::trim') ? trim( $value ) : $value ;
+        $trim = $this->getOption('trim', $param, $this->config->get('winput::trim'));
+        
+        if(is_bool($trim))
+        {
+            return $trim ? trim( $value ) : $value ;
+        }
+        return $value;
+        
     }
 }

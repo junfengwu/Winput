@@ -2,6 +2,6 @@
 
 interface ServicesInterface
 {
-    public function clean( $key );
+    public function clean( $value, array $param = array() );
    
 }

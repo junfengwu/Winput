@@ -2,21 +2,24 @@
 
 return array(
     
-   'trim'      => true,
+    'trim'      => true,
     
-   'clean' 	=> true,
+    'clean' 	=> true,
     
     'sanitize'  => true,
     
     'cache'     => storage_path().'/cache',
     
+    'filter'    => '',
+    
     'html_options' => array(
-                   'Core.Encoding'             =>  'UTF-8',
-                   'HTML.Doctype'            =>  'XHTML 1.0 Transitional',
+                   'Core.Encoding'              =>  'UTF-8',
+                   'HTML.Doctype'               =>  'XHTML 1.0 Transitional',
                    'HTML.AllowedElements'       =>  'pre,strike,abbr,acronym,code,em,del,cite,blockquote,b,i,p,q,br,ul,ol,li,a,strong',
                    'Attr.AllowedClasses'        => '',
                    'HTML.AllowedAttributes'     =>  'cite,lang',
-                   'AutoFormat.RemoveEmpty'     => true
+                   'AutoFormat.RemoveEmpty'     => true,
+                   'HTML.Allowed'               => ''
                     
                     )
       

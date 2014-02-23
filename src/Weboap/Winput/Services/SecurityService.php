@@ -4,7 +4,7 @@ use Weboap\Winput\Libs\Security\Security;
 use Illuminate\Config\Repository as Config;
 
 
-class SecurityService implements Interfaces\ServicesInterface{
+class SecurityService extends Abstracts\ServicesAbstract implements Interfaces\ServicesInterface{
     
     protected $config;
     
@@ -16,8 +16,23 @@ class SecurityService implements Interfaces\ServicesInterface{
         $this->security = $security;
     }
     
-    public function clean( $value )
+    public function clean( $value, array $param = array() )
     {
-        return $this->config->get('winput::clean') ? $this->security->xss_clean( $value ) : $value ;
+        $clean = $this->getOption('clean', $param, $this->config->get('winput::clean'));
+       
+        $is_image = $this->getOption('image', $param, false);
+        
+        if(! is_bool($is_image))
+        {
+            $is_image = false;
+        }
+        
+        if(is_bool($clean))
+        {
+            return $clean ? $this->security->xss_clean( $value, $is_image ) : $value ;
+        }
+        return $value;
+        
+       
     }
 }

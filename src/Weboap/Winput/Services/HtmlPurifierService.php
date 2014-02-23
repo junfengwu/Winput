@@ -4,7 +4,7 @@ use Weboap\Winput\Libs\Html\Sanitizer;
 use Illuminate\Config\Repository as Config;
 
 
-class HtmlPurifierService implements Interfaces\ServicesInterface{
+class HtmlPurifierService extends Abstracts\ServicesAbstract implements Interfaces\ServicesInterface{
     
     protected $config;
     
@@ -20,15 +20,25 @@ class HtmlPurifierService implements Interfaces\ServicesInterface{
         $this->sanitizer = isset( $sanitizer ) ? $sanitizer : new Sanitizer( $cache, $options );
     }
     
-    public function clean( $value )
+    public function clean( $value, array $param = array() )
     {
-        if ( $this->config->get('winput::sanitize') )
-        {
-            $dirtyValue = preg_replace('/<\?xml[^>]+\/>/im', '', $value); 
-            
-            return $this->sanitizer->sanitize( $dirtyValue );
-        }
+       $sanitize = $this->getOption('sanitize', $param, $this->config->get('winput::sanitize'));
+       
+       $filter = $this->getOption('filter', $param, $this->config->get('winput::filter'));
+       
+       if( ! is_string( $filter ) )
+       {
+        $filter = '';
+       }
         
-        return  $value;
+        if(is_bool($sanitize) && $sanitize)
+        {
+                $dirtyValue = preg_replace('/<\?xml[^>]+\/>/im', '', $value); 
+                
+                return $this->sanitizer->sanitize( $dirtyValue, $filter );
+            
+        }
+        return $value;
+       
     }
 }
