@@ -18,21 +18,15 @@ class SecurityService extends Abstracts\ServicesAbstract implements Interfaces\S
     
     public function clean( $value, array $param = array() )
     {
-        $clean = $this->getOption('clean', $param, $this->config->get('winput::clean'));
+       $this->setOptions($param);
        
-        $is_image = $this->getOption('image', $param, false);
+       $clean       = $this->getOption('clean');
+       $clean       = is_bool( $clean ) ? $clean : $this->config->get('winput::clean');
         
-        if(! is_bool($is_image))
-        {
-            $is_image = false;
-        }
-        
-        if(is_bool($clean))
-        {
-            return $clean ? $this->security->xss_clean( $value, $is_image ) : $value ;
-        }
-        return $value;
-        
+       $is_image    = $this->getOption('image');
+       $is_image = is_bool( $is_image ) ? $is_image : false;
        
+       return $clean ? $this->security->xss_clean( $value, $is_image ) : $value ;
+        
     }
 }

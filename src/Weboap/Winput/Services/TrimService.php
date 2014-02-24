@@ -8,6 +8,7 @@ class TrimService extends Abstracts\ServicesAbstract implements Interfaces\Servi
     
     protected $config;
 
+    protected $trim;
     
     public function __construct(Config $config)
     {
@@ -16,13 +17,15 @@ class TrimService extends Abstracts\ServicesAbstract implements Interfaces\Servi
     
     public function clean( $value, array $param = array() )
     {
-        $trim = $this->getOption('trim', $param, $this->config->get('winput::trim'));
+      
+      $this->setOptions($param);
+      
+      $trim = $this->getOption('trim');
+     
+      $trim = is_bool( $trim ) ? $trim : $this->config->get('winput::trim');
         
-        if(is_bool($trim))
-        {
-            return $trim ? trim( $value ) : $value ;
-        }
-        return $value;
+      return $trim ? trim( $value ) : $value ;
+      
         
     }
 }

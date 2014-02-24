@@ -22,20 +22,16 @@ class HtmlPurifierService extends Abstracts\ServicesAbstract implements Interfac
     
     public function clean( $value, array $param = array() )
     {
-       $sanitize = $this->getOption('sanitize', $param, $this->config->get('winput::sanitize'));
+       $this->setOptions($param);
        
-       $filter = $this->getOption('filter', $param, $this->config->get('winput::filter'));
+       $sanitize       = $this->getOption('sanitize');
+       $sanitize       = is_bool( $sanitize ) ? $sanitize : $this->config->get('winput::sanitize');
        
-       if( ! is_string( $filter ) )
-       {
-        $filter = '';
-       }
-        
-        if(is_bool($sanitize) && $sanitize)
+        if( is_bool($sanitize) && $sanitize )
         {
                 $dirtyValue = preg_replace('/<\?xml[^>]+\/>/im', '', $value); 
                 
-                return $this->sanitizer->sanitize( $dirtyValue, $filter );
+                return $this->sanitizer->sanitize( $dirtyValue );
             
         }
         return $value;

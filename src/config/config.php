@@ -10,8 +10,6 @@ return array(
     
     'cache'     => storage_path().'/cache',
     
-    'filter'    => '',
-    
     'html_options' => array(
                    'Core.Encoding'              =>  'UTF-8',
                    'HTML.Doctype'               =>  'XHTML 1.0 Transitional',
