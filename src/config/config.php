@@ -8,7 +8,7 @@ return array(
     
     'sanitize'  => true,
     
-    'cache'     => storage_path().'/cache',
+    'cache'     => storage_path().'/cache', //HTML Purifier cache
     
     'html_options' => array(
                    'Core.Encoding'              =>  'UTF-8',
