@@ -1,7 +1,7 @@
 {
      "name": "weboap/winput",
-    "description": "yet another Laravel 4 XSS & html input filter for laravel4",
-    "keywords": ["framework", "laravel","input", "xss", 'security', 'HTML Purifier'],
+    "description": "yet another Laravel 4 XSS (CI Based) & html input filter for laravel4",
+    "keywords": ["framework", "laravel","input", "xss", "security", "HTML Purifier"],
     "authors": [
         {
             "name": "WeboAp",
