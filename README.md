@@ -43,7 +43,7 @@ Run
 php artisan config:publish weboap/winput
 ``` 
 
-to publish carabiner config to
+to publish config 
 
 ``` php
 app/config/packages/weboap/winput
