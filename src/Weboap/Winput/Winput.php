@@ -2,7 +2,6 @@
 
 
 use Illuminate\Http\Request;
-use Weboap\Winput\Exceptions\InvalidArgumentException;
 
 class Winput {
 
