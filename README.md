@@ -71,6 +71,14 @@ $key2 = Winput::get('key2', array('trim'=> false, 'clean'=> false, 'sanitize'=> 
 
 $key3 = Winput::get('key3', [], $default );
 
+$input = Winput::only(['key1','key2',...]);
+
+$input = Winput::only(['key1','key2',...], array('trim'=> false, 'clean'=> false, 'sanitize'=> false)) // result as laravel Input::only(['key1','key2',...])
+
+$input = Winput::except(['key1','key2',...]);
+
+$input = Winput::except(['key1','key2',...], array('trim'=> false, 'clean'=> false, 'sanitize'=> false)) // result as laravel Input::except(['key1','key2',...])
+
 
 ```
 
