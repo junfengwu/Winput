@@ -1,8 +1,8 @@
 <?php namespace Weboap\Winput;
 
 
-use Illuminate\Support\Facades\Input as Input;
-
+use Illuminate\Http\Request;
+use Weboap\Winput\Exceptions\InvalidArgumentException;
 
 class Winput {
 
@@ -13,57 +13,105 @@ class Winput {
     */   
     protected $cleaners;
     
-    
+    /**
+    * Instance of Illuminate\Http\Request
+    * @object $request
+    */   
+    protected $request;
     
     /**
     * Class constructor
     *
     * @return        void
     */
-    public function __construct( array $cleaners = array() )
+    public function __construct( array $cleaners = array(), Request $request )
     {
 	$this->cleaners = $cleaners;
+	$this->request = $request;
     }
 
     /**
     * Get key of the request.
-    *
-    * @param bool $trim
-    * @param bool $sanitize
-    * @param bool $clean 
-    * 
+    * @param str $key key to pull from the request
+    * @param array  [bool $trim, bool $sanitize, bool $clean ] 
+    * @param str default value
     * @return str
     */
 
     public function get($key, array $param = array(), $default = null  ) {
 	
-	   $value = Input::get($key, $default);
+	   $value = $this->request->get($key, $default);
 	   
-	   return $this->CleanValue( $value, $param );
+	   return $this->cleanValue( $value, $param );
 	  
    
     }
  
+ 
     /**
     * Get all of the input and files for the request.
-    *
+    * @param array  [bool $trim, bool $sanitize, bool $clean ] 
+    * @return array
+    */
+    public function all( array $param = array() )
+    {
+	   $all = $this->request->all();
+     
+	return $this->cleanArray($all, $param);
+    }
+    
+    
+    /**
+    * Get only designated inputs.
+    * @param array $keys 
+    * @param array  [bool $trim, bool $sanitize, bool $clean ] 
     * @return array
     */
     
-    public function all( array $param = array() )
+    public function only( array $keys, array $param = array() )
     {
-	   $all = Input::all();
-     
-	    foreach ($all as &$value)
-	    {
-		$value = $this->CleanValue( $value, $param );    
-	    }
-	    
-	return $all;
+	   $only = $this->request->only( $keys );
+       
+	return $this->cleanArray($only, $param);
     }
     
- 
-    private function CleanValue( $value, array $param = array() )
+    /**
+    * Get only designated inputs.
+    * @param array $keys 
+    * @param array  [bool $trim, bool $sanitize, bool $clean ] 
+    * @return array
+    */
+    public function  except( array $keys, array $param = array() )
+    {
+	   $except = $this->request->except( $keys );
+       
+	return $this->cleanArray($except, $param);
+    }    
+    
+    /**
+    * Run thru the input array and send the values to be cleaned.
+    * @param array $input 
+    * @param array  [bool $trim, bool $sanitize, bool $clean ] 
+    * @return array
+    */
+    private function cleanArray(array $input, array $param = array())
+    {
+	 foreach ($input as &$value)
+	    {
+		$value = $this->cleanValue( $value, $param );    
+	    }
+	 return $input;   
+    }
+    
+    
+    /**
+    * Clean individual values.
+    * by running them thru the cleaners.
+    * @param str $value
+    * @param array  [bool $trim, bool $sanitize, bool $clean ] 
+    * @return array
+    */
+    private function cleanValue( $value, array $param = array() )
     {
 	    
 	    foreach ($this->cleaners as $cleaner)

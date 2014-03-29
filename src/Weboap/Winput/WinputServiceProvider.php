@@ -53,9 +53,16 @@ class WinputServiceProvider extends ServiceProvider {
 					$app->make('Weboap\Winput\Services\HtmlPurifierService'),
 					$app->make('Weboap\Winput\Services\SecurityService'),
 					$app->make('Weboap\Winput\Services\TrimService')
-					)
+					),
+				  $app['request']
 				  );
 	    });
+	    
+	    
+	    $this->app->bind('Weboap\Winput\Winput', function($app) {
+			return $app['winput'];
+		    });
+	    
 	}
 	
 	
