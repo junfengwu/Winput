@@ -67,7 +67,7 @@ $input = Winput::all(array('trim'=> false, 'clean'=> false, 'sanitize'=> false))
 
 $key1 = Winput::get('key1')
 
-$key2 = Winput::get('key2', array('trim'=> false, 'clean'=> false, 'sanitize'=> false)) // result as laravel Input::get('key2')
+$key2 = Winput::get('key2', array('trim'=> false, 'clean'=> false, 'sanitize'=> false, 'image'=> false)) // result as laravel Input::get('key2')
 
 $key3 = Winput::get('key3', [], $default );
 
