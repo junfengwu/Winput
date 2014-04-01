@@ -29,6 +29,7 @@ class Winput {
 	$this->request = $request;
     }
 
+    
     /**
     * Get key of the request.
     * @param str $key key to pull from the request
@@ -105,18 +106,30 @@ class Winput {
     
     /**
     * Clean individual values.
-    * by running them thru the cleaners.
+    * by running them thru the cleaners. if we encounter an array send
+    * it back to cleanArray
     * @param str $value
     * @param array  [bool $trim, bool $sanitize, bool $clean ] 
     * @return array
     */
     private function cleanValue( $value, array $param = array() )
     {
+	    //value coming from the request class can be null
+	    if( is_null( $value ) ) return null;
 	    
-	    foreach ($this->cleaners as $cleaner)
+	    if( is_array( $value ) )
 	    {
-		    $value = $cleaner->clean( $value, $param );
+		$value = $this->cleanArray( $value, $param );
+		
 	    }
+	    else
+	    {
+		 foreach ($this->cleaners as $cleaner)
+		{
+		    $value = $cleaner->clean( $value, $param );
+		}
+	    }
+	    
 	    
 	    return $value;
     }
