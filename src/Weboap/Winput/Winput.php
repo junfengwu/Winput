@@ -49,9 +49,7 @@ class Winput {
     {
 	    $all = $this->getAll();
 	    
-	    $value = $this->clean( array_get($all, $key, $default) , $param );
-	    
-	    return ($value != "" ? $value : NULL);
+	    return $this->clean( array_get($all, $key, $default) , $param );
 
     }
  
