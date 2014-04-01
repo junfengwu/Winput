@@ -18,13 +18,12 @@ class TrimService extends Abstracts\ServicesAbstract implements Interfaces\Servi
     public function clean( $value, array $param = array() )
     {
       
-      $this->setOptions($param);
-      
-      $trim = $this->getOption('trim');
-     
-      $trim = is_bool( $trim ) ? $trim : $this->config->get('winput::trim');
-        
-      return $trim ? trim( $value ) : $value ;
+        $trim_config        = $this->config->get('winput::trim');
+        $trim_runtime       = array_get($param, 'trim', null);
+       
+        $trim = $this->which($trim_runtime, $trim_config);
+       
+        return $trim ? trim( $value ) : $value ;
       
         
     }

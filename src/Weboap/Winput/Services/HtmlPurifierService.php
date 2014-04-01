@@ -14,21 +14,31 @@ class HtmlPurifierService extends Abstracts\ServicesAbstract implements Interfac
     {
         $this->config   = $config;
         
+        
+        $options = $this->config->get('winput::htmlFilters');
+        
+        if( ! is_array($options) )
+        {
+            $options = array();
+        }
+        
         $cache = $this->config->get('winput::cache');
-        $options = $this->config->get('winput::html_options');
         
         $this->sanitizer = isset( $sanitizer ) ? $sanitizer : new Sanitizer( $cache, $options );
     }
     
     public function clean( $value, array $param = array() )
     {
-       $this->setOptions($param);
+        $sanitize_config        = $this->config->get('winput::sanitize');
+        $sanitize_runtime       = array_get($param, 'sanitize', null);
        
-       $sanitize       = $this->getOption('sanitize');
-       $sanitize       = is_bool( $sanitize ) ? $sanitize : $this->config->get('winput::sanitize');
+        $sanitize = $this->which($sanitize_runtime, $sanitize_config);
+        
+        
        
-        if( is_bool($sanitize) && $sanitize )
+        if( $sanitize )
         {
+               
                 $dirtyValue = preg_replace('/<\?xml[^>]+\/>/im', '', $value); 
                 
                 return $this->sanitizer->sanitize( $dirtyValue );

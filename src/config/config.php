@@ -10,7 +10,7 @@ return array(
     
     'cache'     => storage_path().'/cache', //HTML Purifier cache
     
-    'html_options' => array(
+    'htmlFilters' => array(
                    'Core.Encoding'              =>  'UTF-8',
                    'HTML.Doctype'               =>  'XHTML 1.0 Transitional',
                    'HTML.AllowedElements'       =>  'pre,strike,abbr,acronym,code,em,del,cite,blockquote,b,i,p,q,br,ul,ol,li,a,strong',
