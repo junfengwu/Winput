@@ -19,7 +19,6 @@
         ],
         "psr-0": {
             "Weboap\\Winput\\": "src/"
-            
         }
     },
 	"minimum-stability": "stable",
@@ -27,6 +26,5 @@
                 "illuminate/support": "4.2.x",    
                 "mockery/mockery": "dev-master",
 		"way/laravel-test-helpers": "dev-master"
-		
 		}
 }
